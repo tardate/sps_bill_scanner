@@ -31,24 +31,10 @@ Jeweler::Tasks.new do |gem|
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-
-desc "Run only RSpec unit test examples"
+desc "Run all RSpec test examples"
 RSpec::Core::RakeTask.new do |spec|
   spec.rspec_opts = ["-c", "-f progress"]
-  spec.pattern = 'spec/unit/**/*_spec.rb'
-end
-
-desc "Run only RSpec integration test examples"
-RSpec::Core::RakeTask.new(:'spec:integration') do |spec|
-  spec.rspec_opts = ["-c", "-f progress"]
-  spec.pattern = 'spec/integration/**/*_spec.rb'
-end
-
-desc "Run all RSpec test examples"
-RSpec::Core::RakeTask.new(:'spec:all') do |spec|
-  spec.rspec_opts = ["-c", "-f progress"]
   spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
 end
 
 task :default => :spec

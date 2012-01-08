@@ -47,5 +47,5 @@ pkg
 # For rubinius:
 #*.rbc
 
-# exclude pdf samples for integration testing
-spec/fixtures/pdf_samples/*.pdf
+# exclude personal pdf samples for integration testing
+spec/fixtures/personal_pdf_samples/*.pdf

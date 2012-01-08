@@ -42,7 +42,10 @@ pkg
 #*.swp
 
 # For redcar:
-#.redcar
+.redcar
 
 # For rubinius:
 #*.rbc
+
+# exclude pdf samples for integration testing
+spec/fixtures/pdf_samples/*.pdf

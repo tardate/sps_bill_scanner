@@ -20,7 +20,10 @@ class SpsBill::Bill
   end
 
   def invoice_month
-    Date.parse(text_in_rect(430.0,999.0,805.0,806.0,1).first.join('-'))
+    @invoice_month ||= if ref = text_position("Dated")
+      date_parts = text_in_rect(ref[:x] + 1,999.0,ref[:y] - 1,ref[:y] + 1,1)
+      Date.parse(date_parts.first.join('-'))
+    end
   end
 
   def electricity_usage
@@ -60,10 +63,8 @@ class SpsBill::Bill
   end
 
   def text_position(text,page=1)
-    if item = content(page).select {|k,v| v.rassoc(text) }
-      y = item.keys.first
-      x = item[y].keys.first
-      { :x => x, :y => y }
+    if item = content(page).map {|k,v| if x = v.rassoc(text) ; [k,x] ; end }.compact.flatten
+      { :x => item[1], :y => item[0] }
     end
   end
 
@@ -83,6 +84,8 @@ class SpsBill::Bill
     end
   end
 
+  # Returns the offset of the PDF document in the +stream+.
+  # Checks up to 50 chars into the file, returns nil of no DF stream detected.
   def pdf_offset(stream)
     stream.rewind
     ofs = stream.pos

@@ -3,6 +3,16 @@ include PdfSamplesHelper
 
 describe "Personal PDF Samples" do
 
+  if personal_pdf_sample_names.empty?
+    pending %(
+
+    You can place the PDFs of your own bills in spec/fixtures/personal_pdf_samples.
+    They will be tested when you run the specs, but are hidden from being added to the
+    git repository.
+
+    )
+  end
+
   personal_pdf_sample_names.each do |sample|
     describe sample do
       let(:sample_name) { sample }

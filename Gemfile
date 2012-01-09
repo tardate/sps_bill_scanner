@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'pdf-reader', '~> 1.0.0.rc1'
+gem 'pdf-reader', '~> 1.0.0.rc1', :git => 'git://github.com/tardate/pdf-reader'
 
 group :development do
   gem 'bundler', '~> 1.0.0'

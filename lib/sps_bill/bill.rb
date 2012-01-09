@@ -23,6 +23,11 @@ class SpsBill::Bill
     Date.parse(text_in_rect(430.0,999.0,805.0,806.0,1).first.join('-'))
   end
 
+  def electricity_usage
+    upper_ref = text_position("Electricity Services")
+    lower_ref = text_position("Gas Services by City Gas Pte Ltd")
+    text_in_rect(240.0,450.0,lower_ref[:y],upper_ref[:y],1)
+  end
 
   private
 
@@ -48,10 +53,18 @@ class SpsBill::Bill
             row << text_map[y][x]
           end
         end
-        box << row
+        box << row unless row.empty?
       end
     end
     box
+  end
+
+  def text_position(text,page=1)
+    if item = content(page).select {|k,v| v.rassoc(text) }
+      y = item.keys.first
+      x = item[y].keys.first
+      { :x => x, :y => y }
+    end
   end
 
   # Load file as a StringIO stream, accounting for invalid format

@@ -17,17 +17,6 @@ module PDF
         @content
       end
 
-      # starting a new page
-      # TODO: this is monkey-patch to fix a bug in PDF::Reader::PageTextReceiver
-      def page=(page)
-        @page    = page
-        @objects = page.objects
-        @font_stack    = [build_fonts(page.fonts)]
-        @xobject_stack = [page.xobjects]
-        @content = {}
-        @stack   = [DEFAULT_GRAPHICS_STATE.dup]
-      end
-
     end
   end
 end

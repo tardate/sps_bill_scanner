@@ -1,3 +1,6 @@
+require 'pdf-reader'
 require 'sps_bill/version'
-require 'pdf/bill_receiver'
+require 'pdf/object_hash'
+require 'pdf/positional_text_receiver'
+require 'pdf/textangle'
 require 'sps_bill/bill'

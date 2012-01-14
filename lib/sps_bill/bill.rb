@@ -1,4 +1,3 @@
-require 'pdf-reader'
 
 #
 class SpsBill::Bill
@@ -12,7 +11,7 @@ class SpsBill::Bill
 
   # Returns PDF::Reader
   def reader
-    @reader ||= PDF::Reader.new(load_source_with_quirks)
+    @reader ||= PDF::Reader.new(source)
   end
 
   def account_number
@@ -68,35 +67,8 @@ class SpsBill::Bill
     end
   end
 
-  # Load file as a StringIO stream, accounting for invalid format
-  # where additional characters exist in the file before the %PDF start of file
-  def load_source_with_quirks
-    if source.respond_to?(:seek) && source.respond_to?(:read)
-      source
-    else
-      stream = File.open(source, "rb")
-      if ofs = pdf_offset(stream)
-        stream.seek(ofs)
-        StringIO.new(stream.read)
-      else
-        raise ArgumentError, "invalid file format"
-      end
-    end
-  end
-
-  # Returns the offset of the PDF document in the +stream+.
-  # Checks up to 50 chars into the file, returns nil of no DF stream detected.
-  def pdf_offset(stream)
-    stream.rewind
-    ofs = stream.pos
-    until stream.readchar == '%' || ofs > 50
-      ofs += 1
-    end
-    ofs < 50 ? ofs : nil
-  end
-
   def load_content(page)
-    billr = PDF::Reader::BillReceiver.new
+    billr = PDF::Reader::PositionalTextReceiver.new
     reader.page(page).walk(billr)
     billr.content
   end

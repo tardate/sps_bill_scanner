@@ -2,7 +2,7 @@ require 'pdf-reader'
 
 module PDF
   class Reader
-    class BillReceiver < PDF::Reader::PageTextReceiver
+    class PositionalTextReceiver < PDF::Reader::PageTextReceiver
 
       # record text that is drawn on the page
       def show_text(string) # Tj

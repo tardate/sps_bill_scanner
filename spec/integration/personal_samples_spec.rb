@@ -20,7 +20,7 @@ describe "Personal PDF Samples" do
 
       it_behaves_like "has a valid reader", :bill
       it_behaves_like "has a valid account number", :bill
-      it_behaves_like "has a valid invoice month", :bill
+      it_behaves_like "has a valid invoice date", :bill
     end
   end
 

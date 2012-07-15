@@ -20,12 +20,12 @@ shared_examples_for "has a valid account number" do |resource_key|
   end
 end
 
-shared_examples_for "has a valid invoice month" do |resource_key|
+shared_examples_for "has a valid invoice date" do |resource_key|
   # args:
   # +resource_key+ is the sym for the resource to test
-  describe "#invoice_month" do
+  describe "#invoice_date" do
     let(:resource) { eval "#{resource_key}" }
-    subject { resource.invoice_month  }
+    subject { resource.invoice_date  }
     it { should be_a(Date) }
   end
 end

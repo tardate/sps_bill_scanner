@@ -14,7 +14,7 @@ doc
 # jeweler generated
 pkg
 
-# Have editor/IDE/OS specific files you need to ignore? Consider using a global gitignore: 
+# Have editor/IDE/OS specific files you need to ignore? Consider using a global gitignore:
 #
 # * Create a file at ~/.gitignore
 # * Include files you want ignored
@@ -49,3 +49,4 @@ pkg
 
 # exclude personal pdf samples for integration testing
 spec/fixtures/personal_pdf_samples/*.pdf
+spec/integration/personal_pdf_tests/*.rb

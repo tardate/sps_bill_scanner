@@ -23,13 +23,13 @@ class PDF::Reader
       end
     end
     private :read_with_quirks
-    
+
     # Returns the offset of the PDF document in the +stream+.
     # Checks up to 50 chars into the file, returns nil of no PDF stream detected.
     def pdf_offset(stream)
       stream.rewind
       ofs = stream.pos
-      until stream.readchar == '%' || ofs > 50
+      until (c = stream.readchar) == '%' || c == 37 || ofs > 50
         ofs += 1
       end
       ofs < 50 ? ofs : nil

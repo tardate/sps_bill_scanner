@@ -1,9 +1,13 @@
 = sps_bill_scanner
 
-Description goes here.
+Extracts bill details from SP Services PDF bills.
+
+If you are an SP Services subscriber, download your bills from https://services.spservices.sg
+
+If you are not an SP Services subscriber, this gem ain't going to be much use for you!
 
 == Contributing to sps_bill_scanner
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project

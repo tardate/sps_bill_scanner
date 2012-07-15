@@ -6,7 +6,8 @@ class PDF::StructuredReader
     @reader = PDF::Reader.new(source)
   end
 
-  # Returns positional text content collection
+  # Returns positional text content collection as a hash:
+  # { y_position: { x_position: content}}
   def content(page=1)
     if @content.is_a?(Array) && @content[page]
       @content[page]

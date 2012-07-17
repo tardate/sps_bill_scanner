@@ -1,4 +1,4 @@
-= sps_bill_scanner
+= sps_bill_scanner {<img src="https://secure.travis-ci.org/tardate/sps_bill_scanner.png" />}[http://travis-ci.org/tardate/sps_bill_scanner]
 
 Extracts bill details from SP Services PDF bills.
 

@@ -29,9 +29,26 @@ either submit a fix yourself if you can, or report the problem at https://github
   [{:kwh=>4.0, :rate=>0.241, :amount=>0.97},{:kwh=>616.0, :rate=>0.2558, :amount=>157.57}]
   > bill.gas_usage
   [{:kwh=>18.0, :rate=>0.1799, :amount=>3.24}]
-  > puts bill.water_usage
+  > bill.water_usage
   [{:cubic_m=>36.1, :rate=>1.17, :amount=>42.24},{:cubic_m=>-3.0, :rate=>1.4, :amount=>-4.2}]
-  > puts bill.to_s
+  > bill.to_s
+  Account number: 8123123123
+  Invoice date  : 2011-10-31
+  Service month : 2011-10-01
+  Total bill    : $168.86
+
+  Electricity Usage
+  -----------------
+  [{:kwh=>14.0, :rate=>0.2728, :amount=>3.82}, {:kwh=>444.0, :rate=>0.2698, :amount=>119.79}]
+
+  Gas Usage
+  ---------
+  [{:kwh=>12.0, :rate=>0.1961, :amount=>2.35}]
+
+  Water Usage
+  -----------
+  [{:cubic_m=>8.4, :rate=>9.83, :amount=>0.0}, {:cubic_m=>1.17, :rate=>0.0, :amount=>0.0}]
+
 
 == Contributing to sps_bill_scanner
 

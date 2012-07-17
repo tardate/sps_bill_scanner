@@ -9,11 +9,9 @@ describe "SpsBill::Bill" do
   end
 
   [
-    :account_number,
-    :total_amount,
-    :invoice_date,
-    :invoice_month,
-    :electricity_usage
+    :source_file,:reader,
+    :account_number,:total_amount,:invoice_date,:invoice_month,
+    :electricity_usage,:gas_usage,:water_usage
   ].each do |supported_attribute|
     describe "##{supported_attribute}" do
       it { should respond_to(supported_attribute) }

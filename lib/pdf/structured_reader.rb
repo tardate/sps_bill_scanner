@@ -40,7 +40,13 @@ class PDF::StructuredReader
   end
 
   def text_position(text,page=1)
-    if item = content(page).map {|k,v| if x = v.rassoc(text) ; [k,x] ; end }.compact.flatten
+    item = if text.class <= Regexp
+      content(page).map {|k,v| if x = v.reduce(nil){|memo,vv|  memo = (vv[1] =~ text) ? vv[0] : memo  } ; [k,x] ; end }
+    else
+      content(page).map {|k,v| if x = v.rassoc(text) ; [k,x] ; end }
+    end
+    item = item.compact.flatten
+    unless item.empty?
       { :x => item[1], :y => item[0] }
     end
   end

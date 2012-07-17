@@ -21,12 +21,13 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "sps_bill"
   gem.version = SpsBill::Version::STRING
-  gem.homepage = "http://github.com/tardate/sps_bill"
+  gem.homepage = "https://github.com/tardate/sps_bill"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{SP Services PDF bill structured data reader}
+  gem.description = %Q{a library that can read SP Services PDF bills and extract and summarize the bill details}
   gem.email = "gallagher.paul@gmail.com"
   gem.authors = ["Paul Gallagher"]
+  gem.files.exclude 'pkg/*'
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

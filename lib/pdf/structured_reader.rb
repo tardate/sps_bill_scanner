@@ -6,14 +6,41 @@ class PDF::StructuredReader
     @reader = PDF::Reader.new(source)
   end
 
-  # Returns positional text content collection as a hash:
+  # Returns positional (with fuzzed y positioning) text content collection as a hash:
   # { y_position: { x_position: content}}
   def content(page=1)
-    if @content.is_a?(Array) && @content[page]
+    @content ||= []
+    if @content[page]
       @content[page]
     else
-      @content ||= []
-      @content[page] = load_content(page)
+      @content[page] = fuzzed_y(precise_content(page))
+    end
+  end
+
+  # Returns a hash with fuzzed y positioning:
+  # { fuzzed_y_position: { x_position: content}}
+  # Given +input+ as a hash:
+  # { y_position: { x_position: content}}
+  # y values that fall within +precision+ points of another will be clustered
+  def fuzzed_y(input,precision=3)
+    output = {}
+    input.keys.sort.each do |precise_y|
+      # matching_y = (precise_y / 5.0).truncate * 5.0
+      matching_y = output.keys.select{|new_y| (new_y - precise_y).abs < precision }.first || precise_y
+      output[matching_y] ||= {}
+      output[matching_y].merge!(input[precise_y])
+    end
+    output
+  end
+
+  # Returns positional text content collection as a hash with precise x,y positioning:
+  # { y_position: { x_position: content}}
+  def precise_content(page=1)
+    @precise_content ||= []
+    if @precise_content[page]
+      @precise_content[page]
+    else
+      @precise_content[page] = load_content(page)
     end
   end
 

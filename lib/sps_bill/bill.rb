@@ -1,21 +1,31 @@
-require 'date'
-
 # Main Bill class for reading SP Services PDF bills
 #
 class SpsBill::Bill
   include SpsBill::BillParser
 
-  attr_reader :source_file, :reader
+  attr_reader :source_file
 
   # accessors for the various bill components
+  #
+  # electricity_usage charges is an array of hashed values:
+  # [{ kwh: float, rate: float, amount: float }]
+  # gas_usage charges is an array of hashed values:
+  # [{ kwh: float, rate: float, amount: float }]
+  # water_usage charges is an array of hashed values:
+  # [{ cubic_m: float, rate: float, amount: float }]
+  #
   attr_reader :account_number,:total_amount,:invoice_date,:invoice_month
   attr_reader :electricity_usage,:gas_usage,:water_usage
 
   # +source+ is a file name or stream-like object
   def initialize(source)
     @source_file = source
-    @reader = PDF::StructuredReader.new(source_file) if source_file
     do_complete_parse
+  end
+
+  # Returns the PDF reader isntance
+  def reader
+    @reader ||= PDF::StructuredReader.new(source_file) if source_file
   end
 
   # Return a pretty(-ish) text format of the core bill details

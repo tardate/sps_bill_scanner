@@ -13,7 +13,24 @@ either submit a fix yourself if you can, or report the problem at https://github
 
 == Programmatic Usage
 
-  # examining a specific bill:
+To load a collection of bills:
+
+  > require 'sps_bill'
+  > bills = SpsBill::BillCollection.load('./my_bills/*.pdf')
+  > bills.total_amounts
+    => [["2011-10-01", 168.86], ["2011-11-01", 196.46], ["2011-12-01", 176.54]]
+  > bills.electricity_usages
+    => [["2011-10-01", 14.0, 0.2728, 3.82], ["2011-10-01", 444.0, 0.2698, 119.79],
+    ["2011-11-01", 2.0, 0.2728, 0.54], ["2011-11-01", 537.0, 0.2698, 144.88],
+    ["2011-12-01", 482.0, 0.2698, 130.04]]
+  > bills.gas_usages
+    => [["2011-10-01", 12.0, 0.1961, 2.35], ["2011-11-01", 12.0, 0.2117, 2.54], ["2011-12-01", 12.0, 0.2117, 2.54]]
+  > bills.water_usages
+    => [["2011-10-01", 8.4, 1.17, 9.83], ["2011-11-01", 11.4, 1.17, 13.34], ["2011-12-01", 9.6, 1.17, 11.23]]
+
+
+To load and examine a specific bill:
+
   > require 'sps_bill'
   > pdf_bill_file = "./my_latest_bill.pdf"
   > bill = SpsBill::Bill.new(pdf_bill_file)

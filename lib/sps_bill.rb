@@ -7,5 +7,6 @@ require 'pdf/structured_reader'
 module SpsBill
 end
 require 'sps_bill/version'
+require 'sps_bill/bill_collection'
 require 'sps_bill/bill_parser'
 require 'sps_bill/bill'

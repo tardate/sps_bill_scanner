@@ -3,7 +3,10 @@ require 'date'
 # all the bill scanning and parsing intelligence
 module SpsBill::BillParser
 
-  protected
+  # Returns a collection of parser errors
+  def errors
+    @errors ||= []
+  end
 
   # Command: scans and extracts billing details from the pdf doc
   def do_complete_parse
@@ -12,7 +15,7 @@ module SpsBill::BillParser
       begin
         send(m)
       rescue => e
-        STDERR.puts "failure parsing #{source_file}:#{m} #{e.inspect}"
+        errors << "failure parsing #{source_file}:#{m} #{e.inspect}"
       end
     end
   end
@@ -24,7 +27,7 @@ module SpsBill::BillParser
 
   # Command: extracts the total amount due for the current month
   def parse_total_amount
-    @total_amount = if ref = reader.text_position(/^Total Current Charges/)
+    @total_amount = if ref = reader.text_position(/^Total Current Charges due on/)
       total_parts = reader.text_in_rect(ref[:x] + 1,400.0,ref[:y] - 1,ref[:y] + 1,1)
       total_parts.flatten.first.to_f
     end

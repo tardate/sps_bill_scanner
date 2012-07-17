@@ -18,4 +18,5 @@ describe "SpsBill::Bill" do
     end
   end
 
+
 end

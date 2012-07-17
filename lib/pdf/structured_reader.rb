@@ -1,3 +1,8 @@
+# Class for reading structured text content
+# This is the one that is a bit hairy - specifically check the fuzzed_y usage
+# which attempts to align text content in the PDF so it can be extracted
+# with correct alignment.
+#
 class PDF::StructuredReader
   attr_reader :reader
 
@@ -44,10 +49,6 @@ class PDF::StructuredReader
     end
   end
 
-  def bounding_box(&block)
-    PDF::Reader::Textangle.new(self,&block)
-  end
-
   # Returns an array of text elements in the bounding box
   def text_in_rect(xmin,xmax,ymin,ymax,page=1)
     text_map = content(page)
@@ -66,6 +67,8 @@ class PDF::StructuredReader
     box
   end
 
+  # Returns the position {x: val, y: val } of +text+ on +page+
+  # +text+ may be  astring (exact match required) or a Regexp
   def text_position(text,page=1)
     item = if text.class <= Regexp
       content(page).map {|k,v| if x = v.reduce(nil){|memo,vv|  memo = (vv[1] =~ text) ? vv[0] : memo  } ; [k,x] ; end }
@@ -76,6 +79,22 @@ class PDF::StructuredReader
     unless item.empty?
       { :x => item[1], :y => item[0] }
     end
+  end
+
+  # WIP - not using Textangle yet for text extraction.
+  # Ideal usage is something like this:
+  #
+  # textangle = reader.bounding_box do
+  #   page 1
+  #   below "Electricity Services"
+  #   above "Gas Services by City Gas Pte Ltd"
+  #   right_of 240.0
+  #   left_of "Total ($)"
+  # end
+  # textangle.text
+  #
+  def bounding_box(&block)
+    PDF::Reader::Textangle.new(self,&block)
   end
 
   private

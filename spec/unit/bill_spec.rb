@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe "SpsBill::Bill" do
+describe SpsBill::Bill do
+
   let(:bill) { SpsBill::Bill.new(nil) }
   subject { bill }
 
@@ -17,6 +18,5 @@ describe "SpsBill::Bill" do
       it { should respond_to(supported_attribute) }
     end
   end
-
 
 end

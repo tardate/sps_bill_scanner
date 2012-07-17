@@ -9,9 +9,10 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Gallagher"]
-  s.date = "2012-07-17"
+  s.date = "2012-07-18"
   s.description = "a library that can read SP Services PDF bills and extract and summarize the bill details"
   s.email = "gallagher.paul@gmail.com"
+  s.executables = ["sps_bill"]
   s.extra_rdoc_files = [
     "LICENSE",
     "README.rdoc"
@@ -27,6 +28,7 @@ Gem::Specification.new do |s|
     "LICENSE",
     "README.rdoc",
     "Rakefile",
+    "bin/sps_bill",
     "lib/pdf/object_hash.rb",
     "lib/pdf/positional_text_receiver.rb",
     "lib/pdf/structured_reader.rb",
@@ -35,6 +37,7 @@ Gem::Specification.new do |s|
     "lib/sps_bill/bill.rb",
     "lib/sps_bill/bill_collection.rb",
     "lib/sps_bill/bill_parser.rb",
+    "lib/sps_bill/shell.rb",
     "lib/sps_bill/version.rb",
     "spec/fixtures/pdf_samples/.gitkeep",
     "spec/fixtures/pdf_samples/junk_prefix.pdf",
@@ -47,6 +50,7 @@ Gem::Specification.new do |s|
     "spec/unit/bill_collection_spec.rb",
     "spec/unit/bill_spec.rb",
     "spec/unit/pdf/object_hash_spec.rb",
+    "spec/unit/shell_spec.rb",
     "sps_bill.gemspec"
   ]
   s.homepage = "https://github.com/tardate/sps_bill_scanner"
@@ -60,6 +64,7 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<pdf-reader>, ["= 1.1.1"])
+      s.add_runtime_dependency(%q<getoptions>, ["~> 0.3"])
       s.add_development_dependency(%q<bundler>, ["~> 1.1.4"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
@@ -69,6 +74,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<guard-rspec>, [">= 0"])
     else
       s.add_dependency(%q<pdf-reader>, ["= 1.1.1"])
+      s.add_dependency(%q<getoptions>, ["~> 0.3"])
       s.add_dependency(%q<bundler>, ["~> 1.1.4"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_dependency(%q<rcov>, [">= 0"])
@@ -79,6 +85,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<pdf-reader>, ["= 1.1.1"])
+    s.add_dependency(%q<getoptions>, ["~> 0.3"])
     s.add_dependency(%q<bundler>, ["~> 1.1.4"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
     s.add_dependency(%q<rcov>, [">= 0"])

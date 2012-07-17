@@ -57,14 +57,6 @@ module SpsBill::BillParser
     lower_ref = reader.text_position("Gas Services by City Gas Pte Ltd")
     raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
     @electricity_usage = raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
-    # textangle = reader.bounding_box do
-    #   page 1
-    #   bellow "Electricity Services"
-    #   above "Gas Services by City Gas Pte Ltd"
-    #   right_of 240.0
-    #   left_of "Total ($)"
-    # end
-    # textangle.text
   end
 
   # Command: extracts an array of gas usage charges. Each charge is a Hash:

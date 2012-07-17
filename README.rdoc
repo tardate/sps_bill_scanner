@@ -6,10 +6,30 @@ If you are an SP Services subscriber, download your bills from https://services.
 
 If you are not an SP Services subscriber, this gem ain't going to be much use for you!
 
+== Requirements
+
+* Ruby 1.9
+
 == Limitations
 
 Currently it does not handle multi-property bills, and may not handle extensive multi-page bills for a single property correctly. If you *do* come across bills that this gem can't read correctly, you help to get it fixed is greatly needed:
 either submit a fix yourself if you can, or report the problem at https://github.com/tardate/sps_bill_scanner/issues
+
+== Installation
+
+  gem install sps_bill
+
+== Command Line Usage
+
+Once the gem is installed, use `sps_bill` at the command line to interact with the library manually.
+
+To get help on command options:
+
+  $ sps_bill -h
+
+Example: extract all data in CSV format from a set of PDF bills:
+
+  $ sps_bill --data=all ./path_to/my_bills*.pdf
 
 == Programmatic Usage
 

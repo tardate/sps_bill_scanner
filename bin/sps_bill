@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'rubygems'
+require 'sps_bill'
+require 'getoptions'
+
+begin
+  SpsBill::Shell.new(GetOptions.new(SpsBill::Shell::OPTIONS)).run
+rescue Exception => e
+  STDERR.puts e
+end

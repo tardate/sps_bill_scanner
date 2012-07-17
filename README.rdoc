@@ -6,6 +6,33 @@ If you are an SP Services subscriber, download your bills from https://services.
 
 If you are not an SP Services subscriber, this gem ain't going to be much use for you!
 
+== Limitations
+
+Currently it does not handle multi-property bills, and may not handle extensive multi-page bills for a single property correctly. If you *do* come across bills that this gem can't read correctly, you help to get it fixed is greatly needed:
+either submit a fix yourself if you can, or report the problem at https://github.com/tardate/sps_bill_scanner/issues
+
+== Programmatic Usage
+
+  # examining a specific bill:
+  > require 'sps_bill'
+  > pdf_bill_file = "./my_latest_bill.pdf"
+  > bill = SpsBill::Bill.new(pdf_bill_file)
+  > bill.account_number
+  8123123123
+  > bill.total_amount
+  251.44
+  > bill.invoice_date
+  2011-05-31
+  > bill.invoice_month
+  2011-05-01
+  > bill.electricity_usage
+  [{:kwh=>4.0, :rate=>0.241, :amount=>0.97},{:kwh=>616.0, :rate=>0.2558, :amount=>157.57}]
+  > bill.gas_usage
+  [{:kwh=>18.0, :rate=>0.1799, :amount=>3.24}]
+  > puts bill.water_usage
+  [{:cubic_m=>36.1, :rate=>1.17, :amount=>42.24},{:cubic_m=>-3.0, :rate=>1.4, :amount=>-4.2}]
+  > puts bill.to_s
+
 == Contributing to sps_bill_scanner
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

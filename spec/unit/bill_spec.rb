@@ -10,6 +10,8 @@ describe "SpsBill::Bill" do
 
   [
     :account_number,
+    :total_amount,
+    :invoice_date,
     :invoice_month,
     :electricity_usage
   ].each do |supported_attribute|

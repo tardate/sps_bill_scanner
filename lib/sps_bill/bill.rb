@@ -1,3 +1,4 @@
+require 'date'
 
 #
 class SpsBill::Bill
@@ -73,5 +74,11 @@ class SpsBill::Bill
     raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
     raw_data.map{|l| {:cubic_m => l[0].gsub(/cu m/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
   end
+
+  # Returns a pretty(-ish) text format of the core bill details
+  def to_s
+
+  end
+
 
 end

@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     ".rvmrc",
+    ".travis.yml",
     "Gemfile",
     "Gemfile.lock",
     "Guardfile",
@@ -45,9 +46,10 @@ Gem::Specification.new do |s|
     "spec/support/pdf_samples_helper.rb",
     "spec/unit/bill_collection_spec.rb",
     "spec/unit/bill_spec.rb",
-    "spec/unit/pdf/object_hash_spec.rb"
+    "spec/unit/pdf/object_hash_spec.rb",
+    "sps_bill.gemspec"
   ]
-  s.homepage = "https://github.com/tardate/sps_bill"
+  s.homepage = "https://github.com/tardate/sps_bill_scanner"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.15"

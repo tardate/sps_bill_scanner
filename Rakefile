@@ -21,7 +21,7 @@ Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "sps_bill"
   gem.version = SpsBill::Version::STRING
-  gem.homepage = "https://github.com/tardate/sps_bill"
+  gem.homepage = "https://github.com/tardate/sps_bill_scanner"
   gem.license = "MIT"
   gem.summary = %Q{SP Services PDF bill structured data reader}
   gem.description = %Q{a library that can read SP Services PDF bills and extract and summarize the bill details}

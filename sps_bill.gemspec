@@ -39,6 +39,8 @@ Gem::Specification.new do |s|
     "lib/sps_bill/bill_parser.rb",
     "lib/sps_bill/shell.rb",
     "lib/sps_bill/version.rb",
+    "scripts/data/.gitkeep",
+    "scripts/scan_all_bills.sh",
     "spec/fixtures/pdf_samples/.gitkeep",
     "spec/fixtures/pdf_samples/junk_prefix.pdf",
     "spec/fixtures/personal_pdf_samples/.gitkeep",

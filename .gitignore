@@ -50,3 +50,4 @@ pkg
 # exclude personal pdf samples for integration testing
 spec/fixtures/personal_pdf_samples/*.pdf
 spec/integration/personal_pdf_tests/*.rb
+scripts/data/*.csv

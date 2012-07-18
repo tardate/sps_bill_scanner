@@ -3,6 +3,10 @@ require 'date'
 # all the bill scanning and parsing intelligence
 module SpsBill::BillParser
 
+  ELECTRICITY_SERVICE_HEAD = "Electricity Services"
+  GAS_SERVICE_HEAD = "Gas Services by City Gas Pte Ltd"
+  WATER_SERVICE_HEAD = "Water Services by Public Utilities Board"
+
   # Returns a collection of parser errors
   def errors
     @errors ||= []
@@ -53,28 +57,36 @@ module SpsBill::BillParser
   # Command: extracts an array of electricity usage charges. Each charge is a Hash:
   # { kwh: float, rate: float, amount: float }
   def parse_electricity_usage
-    upper_ref = reader.text_position("Electricity Services")
-    lower_ref = reader.text_position("Gas Services by City Gas Pte Ltd")
-    raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
-    @electricity_usage = raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
+    @electricity_usage = if upper_ref = reader.text_position(ELECTRICITY_SERVICE_HEAD)
+      lower_ref = reader.text_position(GAS_SERVICE_HEAD)
+      lower_ref ||= reader.text_position(WATER_SERVICE_HEAD)
+      if lower_ref
+        raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
+        raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
+      end
+    end
   end
 
   # Command: extracts an array of gas usage charges. Each charge is a Hash:
   # { kwh: float, rate: float, amount: float }
   def parse_gas_usage
-    upper_ref = reader.text_position("Gas Services by City Gas Pte Ltd")
-    lower_ref = reader.text_position("Water Services by Public Utilities Board")
-    raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
-    @gas_usage = raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
+    @gas_usage = if upper_ref = reader.text_position(GAS_SERVICE_HEAD)
+      if lower_ref = reader.text_position(WATER_SERVICE_HEAD)
+        raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
+        raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
+      end
+    end
   end
 
   # Command: extracts an array of water usage charges. Each charge is a Hash:
   # { cubic_m: float, rate: float, amount: float }
   def parse_water_usage
-    upper_ref = reader.text_position("Water Services by Public Utilities Board")
-    lower_ref = reader.text_position("Waterborne Fee")
-    raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
-    @water_usage = raw_data.map{|l| {:cubic_m => l[0].gsub(/cu m/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
+    @water_usage = if upper_ref = reader.text_position(WATER_SERVICE_HEAD)
+      if lower_ref = reader.text_position("Waterborne Fee")
+        raw_data = reader.text_in_rect(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
+        raw_data.map{|l| {:cubic_m => l[0].gsub(/cu m/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
+      end
+    end
   end
 
 end

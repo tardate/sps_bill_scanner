@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Paul Gallagher"]
-  s.date = "2012-07-18"
+  s.date = "2012-07-19"
   s.description = "a library that can read SP Services PDF bills and extract and summarize the bill details"
   s.email = "gallagher.paul@gmail.com"
   s.executables = ["sps_bill"]
@@ -44,7 +44,6 @@ Gem::Specification.new do |s|
     "spec/fixtures/pdf_samples/.gitkeep",
     "spec/fixtures/pdf_samples/junk_prefix.pdf",
     "spec/fixtures/personal_pdf_samples/.gitkeep",
-    "spec/integration/personal_pdf_tests/.gitkeep",
     "spec/integration/personal_samples_spec.rb",
     "spec/spec_helper.rb",
     "spec/support/bill_examples.rb",

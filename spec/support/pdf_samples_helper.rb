@@ -1,4 +1,5 @@
 require 'pathname'
+require 'yaml'
 
 module PdfSamplesHelper
 
@@ -22,4 +23,15 @@ module PdfSamplesHelper
     Dir["#{File.dirname(__FILE__)}/../fixtures/personal_pdf_samples/*.pdf"]
   end
 
+  def personal_pdf_sample_expectations_path
+    Pathname.new(File.dirname(__FILE__)).join('..','fixtures','personal_pdf_samples','expectations.yml')
+  end
+
+  def personal_pdf_sample_expectations
+    begin
+      YAML.load_file personal_pdf_sample_expectations_path
+    rescue
+      []
+    end
+  end
 end

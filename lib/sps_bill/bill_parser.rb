@@ -54,8 +54,8 @@ module SpsBill::BillParser
     end
   end
 
-  # Command: extracts an array of electricity usage charges. Each charge is a Hash:
-  # { kwh: float, rate: float, amount: float }
+  # Command: extracts an array of electricity usage charges. Each element is a Hash:
+  #   { kwh: float, rate: float, amount: float }
   def parse_electricity_usage
     @electricity_usage = if upper_ref = reader.text_position(ELECTRICITY_SERVICE_HEAD)
       lower_ref = reader.text_position(GAS_SERVICE_HEAD)
@@ -67,8 +67,8 @@ module SpsBill::BillParser
     end
   end
 
-  # Command: extracts an array of gas usage charges. Each charge is a Hash:
-  # { kwh: float, rate: float, amount: float }
+  # Command: extracts an array of gas usage charges. Each element is a Hash:
+  #   { kwh: float, rate: float, amount: float }
   def parse_gas_usage
     @gas_usage = if upper_ref = reader.text_position(GAS_SERVICE_HEAD)
       if lower_ref = reader.text_position(WATER_SERVICE_HEAD)
@@ -78,8 +78,8 @@ module SpsBill::BillParser
     end
   end
 
-  # Command: extracts an array of water usage charges. Each charge is a Hash:
-  # { cubic_m: float, rate: float, amount: float }
+  # Command: extracts an array of water usage charges. Each element is a Hash:
+  #   { cubic_m: float, rate: float, amount: float }
   def parse_water_usage
     @water_usage = if upper_ref = reader.text_position(WATER_SERVICE_HEAD)
       if lower_ref = reader.text_position("Waterborne Fee")

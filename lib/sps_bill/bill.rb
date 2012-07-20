@@ -10,15 +10,18 @@ class SpsBill::Bill
 
   # accessors for the various bill components
   #
-  # electricity_usage charges is an array of hashed values:
-  # [{ kwh: float, rate: float, amount: float }]
-  # gas_usage charges is an array of hashed values:
-  # [{ kwh: float, rate: float, amount: float }]
-  # water_usage charges is an array of hashed values:
-  # [{ cubic_m: float, rate: float, amount: float }]
-  #
+
   attr_reader :account_number,:total_amount,:invoice_date,:invoice_month
-  attr_reader :electricity_usage,:gas_usage,:water_usage
+
+  # electricity_usage is an array of hashed values:
+  #   [{ kwh: float, rate: float, amount: float }]
+  attr_reader :electricity_usage
+  # gas_usage is an array of hashed values:
+  #   [{ kwh: float, rate: float, amount: float }]
+  attr_reader :gas_usage
+  # water_usage is an array of hashed values:
+  #   [{ cubic_m: float, rate: float, amount: float }]
+  attr_reader :water_usage
 
   # +source+ is a file name or stream-like object
   def initialize(source)

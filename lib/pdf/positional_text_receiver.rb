@@ -1,3 +1,4 @@
+# Class for collating positional text content from a PDF
 class PDF::Reader::PositionalTextReceiver < PDF::Reader::PageTextReceiver
 
   # record text that is drawn on the page

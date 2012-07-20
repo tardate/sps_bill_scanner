@@ -12,8 +12,8 @@ class SpsBill::BillCollection < Array
 
     # Returns an array of Bill objects for PDF files matching +path_spec+.
     # +path_spec+ may be either:
-    #  - an array of filenames e.g. ['data/file1.pdf','file2.pdf']
-    #  - or a single file or path spec e.g. './somepath/file1.pdf' or './somepath/*.pdf'
+    # - an array of filenames e.g. ['data/file1.pdf','file2.pdf']
+    # - or a single file or path spec e.g. './somepath/file1.pdf' or './somepath/*.pdf'
     def load(path_spec)
       path_spec = Dir[path_spec] unless path_spec.class <= Array
       path_spec.each_with_object(new) do |filename,memo|
@@ -23,30 +23,33 @@ class SpsBill::BillCollection < Array
 
   end
 
+  # Returns the suitable array of headers for +dataset_selector+
   def headers(dataset_selector)
     case dataset_selector
     when :total_amounts
-      ['invoice_month','amount']
+      %w(invoice_month amount)
     when :electricity_usages
-      ['invoice_month','kwh','rate','amount']
+      %w(invoice_month kwh rate amount)
     when :gas_usages
-      ['invoice_month','kwh','rate','amount']
+      %w(invoice_month kwh rate amount)
     when :water_usages
-      ['invoice_month','cubic_m','rate','amount']
+      %w(invoice_month cubic_m rate amount)
     when :all_data
-      ['invoice_month','measure','kwh','cubic_m','rate','amount']
+      %w(invoice_month measure kwh cubic_m rate amount)
     end
   end
 
-  # Returns a hash of all data by month
-  # [[month,measure,kwh,cubic_m,rate,amount]]
+  # Returns an array of all data by month
+  #   [[month,measure,kwh,cubic_m,rate,amount]]
   # measure: total_charges,electricity,gas,water
   def all_data
     total_amounts(:all) + electricity_usages(:all) + gas_usages(:all) + water_usages(:all)
   end
 
-  # Returns a hash of total bill amounts by month
-  # [[month,amount]]
+  # Returns an array of total bill amounts by month
+  #   [[month,amount]]
+  # when +style+ is :solo, returns minimal array to describe this data set in isolation,
+  # else returns a normalised sparse array that is common to all data sets
   def total_amounts(style=:solo)
     each_with_object([]) do |bill,memo|
       if style==:solo
@@ -57,8 +60,10 @@ class SpsBill::BillCollection < Array
     end
   end
 
-  # Returns a hash of electricity_usages by month
-  # [[month,kwh,rate,amount]]
+  # Returns an array of electricity_usages by month
+  #   [[month,kwh,rate,amount]]
+  # when +style+ is :solo, returns minimal array to describe this data set in isolation,
+  # else returns a normalised sparse array that is common to all data sets
   def electricity_usages(style=:solo)
     each_with_object([]) do |bill,memo|
       bill.electricity_usage.each do |usage|
@@ -71,8 +76,10 @@ class SpsBill::BillCollection < Array
     end
   end
 
-  # Returns a hash of gas_usages by month
-  # [[month,kwh,rate,amount]]
+  # Returns an array of gas_usages by month
+  #   [[month,kwh,rate,amount]]
+  # when +style+ is :solo, returns minimal array to describe this data set in isolation,
+  # else returns a normalised sparse array that is common to all data sets
   def gas_usages(style=:solo)
     each_with_object([]) do |bill,memo|
       bill.gas_usage.each do |usage|
@@ -85,8 +92,10 @@ class SpsBill::BillCollection < Array
     end
   end
 
-  # Returns a hash of water_usages by month
-  # [[month,kwh,rate,amount]]
+  # Returns an array of water_usages by month
+  #   [[month,kwh,rate,amount]]
+  # when +style+ is :solo, returns minimal array to describe this data set in isolation,
+  # else returns a normalised sparse array that is common to all data sets
   def water_usages(style=:solo)
     each_with_object([]) do |bill,memo|
       bill.water_usage.each do |usage|

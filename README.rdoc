@@ -1,6 +1,6 @@
 = SP Services Bill Scanner {<img src="https://secure.travis-ci.org/tardate/sps_bill_scanner.png" />}[http://travis-ci.org/tardate/sps_bill_scanner]
 
-Extracts bill details from SP Services PDF bills.
+Extracts bill details from SP Services PDF bills so that you can, um, do geeky data analysis n'stuff.
 
 If you are an SP Services subscriber, download your bills from https://services.spservices.sg
 
@@ -40,15 +40,15 @@ Here's the basic outline:
 
 * Get you own PDF bills from from https://services.spservices.sg
 
-  - put them in spec/fixtures/personal_pdf_samples
+  - put them in <tt>spec/fixtures/personal_pdf_samples</tt>
   - NB: these are ignored by git so you won't accidentally commit them
 
 * At this point you can run the tests with <tt>rake</tt> and it will do a very basic
   check of the PDFs you have added
 * To run complete checks to ensure all the data is being extracted correctly:
 
-  - see the doc in spec/fixtures/personal_pdf_samples/expectations.yml.sample
-  - copy this to spec/fixtures/personal_pdf_samples/expectations.yml
+  - see the doc in <tt>spec/fixtures/personal_pdf_samples/expectations.yml.sample</tt>
+  - copy this to <tt>spec/fixtures/personal_pdf_samples/expectations.yml</tt>
   - enter in the details that describe each bill you have added
   - now when you run <tt>rake</tt> it will also verify the data extracted from your
     bills using expectations.yml

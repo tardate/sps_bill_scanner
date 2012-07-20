@@ -6,14 +6,55 @@ If you are an SP Services subscriber, download your bills from https://services.
 
 If you are not an SP Services subscriber, this gem ain't going to be much use for you!
 
-== Requirements
+== Requirements and Known Limitations
 
-* Ruby 1.9
+* Requires Ruby 1.9 (1.8 compatibility not tested or assured)
+* R is used for data analysis examples - this is optional
+* Currently it does not handle multi-property bills.
+* May not handle extensive multi-page bills for a single property correctly.
 
-== Limitations
+If you _do_ come across bills that this gem can't read correctly, your help to get it fixed is greatly needed:
+either submit a fix yourself, or report the problem at https://github.com/tardate/sps_bill_scanner/issues
 
-Currently it does not handle multi-property bills, and may not handle extensive multi-page bills for a single property correctly. If you *do* come across bills that this gem can't read correctly, you help to get it fixed is greatly needed:
-either submit a fix yourself if you can, or report the problem at https://github.com/tardate/sps_bill_scanner/issues
+== Help Required: Test this with your own bills
+
+Unfortunately, there isn't a definitive set of bill examples that make it possible to ensure that
+this gem will work for every bill issued by SP Services. And since bills are in PDF format,
+extracting the data in a structured manner is a task fraught with pitfalls.
+
+I have tested this with my own bills (going back over a year) but that definitely doesn't mean it will
+work for others.
+
+So I need help from others who are willing to test with their own bills. I'm not asking for your bills
+as that raises privacy concerns, and I definitely don't want real bills committed to the git repository.
+
+Instead, I have setup the tests in a way that should make it easy for you to test with your own bills.
+
+Here's the basic outline:
+
+* First, make sure tests are running green for you 'as-is':
+
+  - fork or clone the repo
+  - <tt>bundle</tt> will install development dependencies
+  - <tt>rake</tt> will run the tests - they should all be OK
+
+* Get you own PDF bills from from https://services.spservices.sg
+
+  - put them in spec/fixtures/personal_pdf_samples
+  - NB: these are ignored by git so you won't accidentally commit them
+
+* At this point you can run the tests with <tt>rake</tt> and it will do a very basic
+  check of the PDFs you have added
+* To run complete checks to ensure all the data is being extracted correctly:
+
+  - see the doc in spec/fixtures/personal_pdf_samples/expectations.yml.sample
+  - copy this to spec/fixtures/personal_pdf_samples/expectations.yml
+  - enter in the details that describe each bill you have added
+  - now when you run <tt>rake</tt> it will also verify the data extracted from your
+    bills using expectations.yml
+
+Feel free to get in touch or discuss in the github issues area if you are trying to help but run
+into problems with this!
 
 == Installation
 
@@ -21,17 +62,27 @@ either submit a fix yourself if you can, or report the problem at https://github
 
 == Command Line Usage
 
-Once the gem is installed, use `sps_bill` at the command line to interact with the library manually.
+Once the gem is installed, use <tt>sps_bill</tt> at the command line to interact with the library manually.
 
 To get help on command options:
 
   $ sps_bill -h
 
-Example: extract all data in CSV format from a set of PDF bills:
+For example: to extract all data in CSV format from a set of PDF bills:
 
   $ sps_bill --data=all ./path_to/my_bills*.pdf
 
 == Programmatic Usage
+
+You can use the gem from your own scripts or applications. There are just two classes you really need
+to understand:
+
+* SpsBill::BillCollection is an Array-like class that represents a collection of bills.
+  - the <tt>load</tt> method is used to initialise it given a path or array of filenames
+  - a range of collection methods are provided to extract sets of data (e.g. <tt>electricity_usages</tt>)
+* SpsBill::Bill represents an individual bill
+  - initialised given a file name
+  - provides a range of accessors to get at individual data elements (e.g. <tt>electricity_usage</tt>)
 
 To load a collection of bills:
 
@@ -85,7 +136,6 @@ To load and examine a specific bill:
   Water Usage
   -----------
   [{:cubic_m=>8.4, :rate=>9.83, :amount=>0.0}, {:cubic_m=>1.17, :rate=>0.0, :amount=>0.0}]
-
 
 == Contributing to sps_bill_scanner
 

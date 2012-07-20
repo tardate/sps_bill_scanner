@@ -1,4 +1,7 @@
-# Main Bill class for reading SP Services PDF bills
+# SpsBill::Bill represents an individual SP Services PDF bill
+#
+# It is initialised given a file name, and provides a range of accessors
+# to get at individual data elements (e.g. <tt>electricity_usage</tt>)
 #
 class SpsBill::Bill
   include SpsBill::BillParser

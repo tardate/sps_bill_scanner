@@ -1,10 +1,19 @@
-# Bill collection class for speacial handling of an array of SP Services PDF bills
+# SpsBill::BillCollection is an Array-like class that represents a collection
+# of SP Services PDF bills.
+#
+# The <tt>load</tt> method is used to initialise the collection given a path specification.
+#
+# A range of collection methods are provided to extract sets of data
+# from the entire collection (e.g. <tt>electricity_usages</tt>).
 #
 class SpsBill::BillCollection < Array
 
   class << self
 
-    # Returns an array of Bill objects for PDF files matching +path_spec+
+    # Returns an array of Bill objects for PDF files matching +path_spec+.
+    # +path_spec+ may be either:
+    #  - an array of filenames e.g. ['data/file1.pdf','file2.pdf']
+    #  - or a single file or path spec e.g. './somepath/file1.pdf' or './somepath/*.pdf'
     def load(path_spec)
       path_spec = Dir[path_spec] unless path_spec.class <= Array
       path_spec.each_with_object(new) do |filename,memo|

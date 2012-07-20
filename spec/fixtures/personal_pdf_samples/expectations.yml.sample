@@ -1,0 +1,48 @@
+# rename this file to expectations.yml and use it to
+# test all your SPS bill files that you copy to spec/fixtures/personal_pdf_samples.
+#
+# For each bill file, create a section below (like the examples shown) and
+# update it with the actual values that should come from the bill.
+#
+# This is a YAML-format file, so beware that indentation is significant
+---
+my_sps_bill-2012-02.pdf:
+  :account_number: '8123123123'
+  :invoice_date: 2012-02-29
+  :invoice_month: 2012-02-01
+  :total_amount: 251.44
+  :electricity_usage:
+  - :kwh: 4.0
+    :rate: 0.241
+    :amount: 0.97
+  - :kwh: 616.0
+    :rate: 0.2558
+    :amount: 157.57
+  :gas_usage:
+  - :kwh: 18.0
+    :rate: 0.1799
+    :amount: 3.24
+  :water_usage:
+  - :cubic_m: 36.1
+    :rate: 1.17
+    :amount: 42.24
+  - :cubic_m: -3.0
+    :rate: 1.4
+    :amount: -4.2
+my_sps_bill-2012-03.pdf:
+  :account_number: '8123123123'
+  :invoice_date: 2012-03-31
+  :invoice_month: 2012-03-01
+  :total_amount: 235.7
+  :electricity_usage:
+  - :kwh: 519.0
+    :rate: 0.2558
+    :amount: 132.76
+  :gas_usage:
+  - :kwh: 15.0
+    :rate: 0.1799
+    :amount: 2.7
+  :water_usage:
+  - :cubic_m: 38.7
+    :rate: 1.17
+    :amount: 45.28

@@ -31,35 +31,8 @@ describe "Personal PDF Samples" do
   # This will read spec/fixtures/personal_pdf_samples/expectations.yml
   # and and test according to the definitions it contains.
   #
-  # expectations.yml should contain a YAML structure like this:
-  #
-  # ---
-  # file1.pdf:
-  #   :account_number: '8123123123'
-  #   :invoice_date: 2011-05-31
-  #   :invoice_month: 2011-05-01
-  #   :total_amount: 251.44
-  #   :electricity_usage:
-  #   - :kwh: 4.0
-  #     :rate: 0.241
-  #     :amount: 0.97
-  #   - :kwh: 616.0
-  #     :rate: 0.2558
-  #     :amount: 157.57
-  #   :gas_usage:
-  #   - :kwh: 18.0
-  #     :rate: 0.1799
-  #     :amount: 3.24
-  #   :water_usage:
-  #   - :cubic_m: 36.1
-  #     :rate: 1.17
-  #     :amount: 42.24
-  #   - :cubic_m: -3.0
-  #     :rate: 1.4
-  #     :amount: -4.2
-  # file2.pdf:
-  #   :account_number: '8123123123'
-  #   ... (etc)
+  # See spec/fixtures/personal_pdf_samples/expectations.yml.sample
+  # for details on how to setup the expectations.yml file
   #
   personal_pdf_sample_expectations.each do |sample_name,expectations|
     describe sample_name do
@@ -67,10 +40,21 @@ describe "Personal PDF Samples" do
       let(:bill) { SpsBill::Bill.new(sample_file) }
       subject { bill }
 
-      its(:account_number) { should eql(expectations[:account_number])}
-      its(:total_amount) { should eql(expectations[:total_amount])}
-      its(:invoice_date) { should eql(expectations[:invoice_date])}
-      its(:invoice_month) { should eql(expectations[:invoice_month])}
+      if expectations[:account_number]
+        its(:account_number) { should eql(expectations[:account_number])}
+      end
+
+      if expectations[:total_amount]
+        its(:total_amount) { should eql(expectations[:total_amount])}
+      end
+
+      if expectations[:invoice_date]
+        its(:invoice_date) { should eql(expectations[:invoice_date])}
+      end
+
+      if expectations[:invoice_month]
+        its(:invoice_month) { should eql(expectations[:invoice_month])}
+      end
 
       if expectations[:electricity_usage]
         its(:electricity_usage) { should eql(expectations[:electricity_usage])}

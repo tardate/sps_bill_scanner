@@ -29,7 +29,7 @@ Command Options
   end
 
   def run
-    if options[:help]
+    if options[:help] or fileset.empty?
       self.class.usage
       return
     end

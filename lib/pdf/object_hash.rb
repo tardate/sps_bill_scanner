@@ -1,3 +1,11 @@
+# This monkey-patches pdf-reader to allow it to read downloaded SP Services PDF.
+# The patch caters for junk characters that appear in the file before the start of the PDF stream.
+# (its an html head block actually - I suspect a bug in the Adobe software used to serve the bills)
+#
+# The patch has been contributed back to the pdf-reader project (https://github.com/yob/pdf-reader/pull/54)
+# and has already been merged on master. When it shows up in a release of the pdf-reader gem
+# we can trash this patch.
+#
 class PDF::Reader
   class ObjectHash
 

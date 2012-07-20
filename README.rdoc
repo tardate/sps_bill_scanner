@@ -1,12 +1,17 @@
 = SP Services Bill Scanner {<img src="https://secure.travis-ci.org/tardate/sps_bill_scanner.png" />}[http://travis-ci.org/tardate/sps_bill_scanner]
 
-Extracts bill details from SP Services PDF bills so that you can, um, do geeky data analysis n'stuff.
+Extracts bill details from SP Services PDF bills so that you can, um, do geeky data analysis n'stuff,
+and because I loathe data entry!
+One day we'll have {smart meters}[http://en.wikipedia.org/wiki/Smart_meter]
+and SP Services will let us download our raw meter data. But until then...
 
 If you are an SP Services subscriber, download your bills from https://services.spservices.sg
 
 If you are not an SP Services subscriber, this gem ain't going to be much use for you!
 
 Some example analysis using {R}[http://www.r-project.org/] is included in the <tt>scripts</tt> folder.
+The inspiration for hacking away with R comes from reading Sau Sheong's new book
+{Exploring Everyday Things with Ruby and R}[http://www.bookjetty.com/books/1449315151/exploring-data-learning-everyday]. Check it out!
 
 == Requirements and Known Limitations
 
@@ -57,6 +62,9 @@ Here's the basic outline:
 
 Feel free to get in touch or discuss in the github issues area if you are trying to help but run
 into problems with this!
+
+If you are more interested in the data analytics, I'm keen to add more interesting R scripts to the collection.
+Your contributions are most welcome.
 
 == Installation
 

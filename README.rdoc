@@ -58,7 +58,7 @@ Here's the basic outline:
   - copy this to <tt>spec/fixtures/personal_pdf_samples/expectations.yml</tt>
   - enter in the details that describe each bill you have added
   - now when you run <tt>rake</tt> it will also verify the data extracted from your
-    bills using expectations.yml
+    bills using <tt>expectations.yml</tt>
 
 Feel free to get in touch or discuss in the github issues area if you are trying to help but run
 into problems with this!
@@ -160,14 +160,16 @@ in the <tt>scripts</tt> folder.
 === sample data and analysis
 
 [data/all_services.csv.sample]  sample CSV data for a years worth of elec, gas, and water
-[data/all_services.sample.pdf]  PDF analysis produced by this script for all_services.csv.sample
+[data/all_services.sample.pdf]  PDF analysis produced by <tt>full_analysis.R</tt> using
+                                the <tt>all_services.csv.sample</tt> data set.
 [data/elec_and_water_only.csv.sample]  sample CSV data for a years worth of elec and water
-[data/elec_and_water_only.sample.pdf]  PDF analysis produced by this script for elec_and_water_only.csv.sample
+[data/elec_and_water_only.sample.pdf]  PDF analysis produced by <tt>full_analysis.R</tt> using
+                                       the <tt>elec_and_water_only.csv.sample</tt> data set.
 
 === example run
 
   ./scan_all_bills.sh ../path_to_my_bills/*.pdf > my_bill_data.csv
-  ./full_analysis.R data_file.csv my_bill_data.csv
+  ./full_analysis.R my_bill_data.csv
 
 This will have produced an analysis of all your bills in <tt>full_analysis.pdf</tt>.
 

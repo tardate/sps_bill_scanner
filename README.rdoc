@@ -6,6 +6,8 @@ If you are an SP Services subscriber, download your bills from https://services.
 
 If you are not an SP Services subscriber, this gem ain't going to be much use for you!
 
+Some example analysis using {R}[http://www.r-project.org/] is included in the <tt>scripts</tt> folder.
+
 == Requirements and Known Limitations
 
 * Requires Ruby 1.9 (1.8 compatibility not tested or assured)
@@ -136,6 +138,30 @@ To load and examine a specific bill:
   Water Usage
   -----------
   [{:cubic_m=>8.4, :rate=>9.83, :amount=>0.0}, {:cubic_m=>1.17, :rate=>0.0, :amount=>0.0}]
+
+== Data Analysis with R
+
+Some examples of bill data and analysis using {R}[http://www.r-project.org/] are included
+in the <tt>scripts</tt> folder.
+
+=== sample scripts
+
+[scripts/scan_all_bills.sh]  an example script to scan a set of bills and produce a csv file for analysis
+[scripts/full_analysis.R]  an example script that prepares a one-page PDF summary analysis
+
+=== sample data and analysis
+
+[data/all_services.csv.sample]  sample CSV data for a years worth of elec, gas, and water
+[data/all_services.sample.pdf]  PDF analysis produced by this script for all_services.csv.sample
+[data/elec_and_water_only.csv.sample]  sample CSV data for a years worth of elec and water
+[data/elec_and_water_only.sample.pdf]  PDF analysis produced by this script for elec_and_water_only.csv.sample
+
+=== example run
+
+  ./scan_all_bills.sh ../path_to_my_bills/*.pdf > my_bill_data.csv
+  ./full_analysis.R data_file.csv my_bill_data.csv
+
+This will have produced an analysis of all your bills in <tt>full_analysis.pdf</tt>.
 
 == Contributing to sps_bill_scanner
 

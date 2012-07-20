@@ -12,12 +12,14 @@ SP Services Bill Scanner v#{SpsBill::Version::STRING}
 ===================================
 
 Usage:
-  sps_bill [options]
+  sps_bill [options] file-spec
 
 Command Options
   -r  | --raw    raw data format (without headers)
   -c  | --csv    output in CSV format (default)
   -d= | --data=[charges,electricity,gas,water,all]
+
+file-spec is a path to the PDF bill(s) to read.
 
     EOS
   end

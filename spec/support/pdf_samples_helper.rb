@@ -20,11 +20,11 @@ module PdfSamplesHelper
   end
 
   def personal_pdf_sample_names
-    Dir["#{File.dirname(__FILE__)}/../fixtures/personal_pdf_samples/*.pdf"]
+    Dir[personal_pdf_sample_path.join("*.pdf")]
   end
 
   def personal_pdf_sample_expectations_path
-    Pathname.new(File.dirname(__FILE__)).join('..','fixtures','personal_pdf_samples','expectations.yml')
+    Pathname.new(personal_pdf_sample_path.join('expectations.yml'))
   end
 
   def personal_pdf_sample_expectations

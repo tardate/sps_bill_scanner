@@ -31,7 +31,7 @@ class SpsBill::Bill
 
   # Returns the PDF reader isntance
   def reader
-    @reader ||= PDF::StructuredReader.new(source_file) if source_file
+    @reader ||= PDF::Reader::Turtletext.new(source_file) if source_file
   end
 
   # Return a pretty(-ish) text format of the core bill details

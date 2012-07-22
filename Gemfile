@@ -1,12 +1,11 @@
 source "http://rubygems.org"
 
-gem 'pdf-reader', '1.1.1'
+gem 'pdf-reader-turtletext', '~> 0.1.0'
 gem 'getoptions', '~> 0.3'
 
 group :development do
   gem 'bundler', '~> 1.1.4'
   gem 'jeweler', '~> 1.6.4'
-  gem 'rcov', '>= 0'
 end
 
 group :development, :test do

@@ -5,7 +5,7 @@ shared_examples_for "has a valid reader" do |resource_key|
     let(:resource) { eval "#{resource_key}" }
     let(:reader) { resource.reader }
     subject { reader }
-    it { should be_a(PDF::StructuredReader) }
+    it { should be_a(PDF::Reader::Turtletext) }
   end
 end
 

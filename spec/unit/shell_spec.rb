@@ -6,7 +6,7 @@ describe SpsBill::Shell do
   describe "##usage" do
     subject { SpsBill::Shell.usage }
     it "should print help" do
-      STDOUT.should_receive(:puts)
+      STDOUT.should_receive(:print)
       subject
     end
   end

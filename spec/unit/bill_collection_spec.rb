@@ -96,9 +96,9 @@ describe SpsBill::BillCollection do
     let(:bills) { SpsBill::BillCollection.new }
     before do
       bill_a.instance_variable_set(:@invoice_month, Date.parse('2012-02-01'))
-      bill_a.instance_variable_set(:@electricity_usage, [{ kwh: 12.0, rate: 0.1234, amount: 12.34 }] )
+      bill_a.instance_variable_set(:@electricity_usage, [{ :kwh => 12.0, :rate => 0.1234, :amount => 12.34 }] )
       bill_b.instance_variable_set(:@invoice_month, Date.parse('2012-03-01'))
-      bill_b.instance_variable_set(:@electricity_usage, [{ kwh: 24.0, rate: 0.5678, amount: 56.78 }])
+      bill_b.instance_variable_set(:@electricity_usage, [{ :kwh => 24.0, :rate => 0.5678, :amount => 56.78 }])
       bills << bill_a
       bills << bill_b
     end
@@ -122,9 +122,9 @@ describe SpsBill::BillCollection do
     let(:bills) { SpsBill::BillCollection.new }
     before do
       bill_a.instance_variable_set(:@invoice_month, Date.parse('2012-02-01'))
-      bill_a.instance_variable_set(:@gas_usage, [{ kwh: 12.0, rate: 0.1234, amount: 12.34 }] )
+      bill_a.instance_variable_set(:@gas_usage, [{ :kwh => 12.0, :rate => 0.1234, :amount => 12.34 }] )
       bill_b.instance_variable_set(:@invoice_month, Date.parse('2012-03-01'))
-      bill_b.instance_variable_set(:@gas_usage, [{ kwh: 24.0, rate: 0.5678, amount: 56.78 }])
+      bill_b.instance_variable_set(:@gas_usage, [{ :kwh => 24.0, :rate => 0.5678, :amount => 56.78 }])
       bills << bill_a
       bills << bill_b
     end
@@ -147,9 +147,9 @@ describe SpsBill::BillCollection do
     let(:bills) { SpsBill::BillCollection.new }
     before do
       bill_a.instance_variable_set(:@invoice_month, Date.parse('2012-02-01'))
-      bill_a.instance_variable_set(:@water_usage, [{ cubic_m: 12.0, rate: 0.1234, amount: 12.34 }] )
+      bill_a.instance_variable_set(:@water_usage, [{ :cubic_m => 12.0, :rate => 0.1234, :amount => 12.34 }] )
       bill_b.instance_variable_set(:@invoice_month, Date.parse('2012-03-01'))
-      bill_b.instance_variable_set(:@water_usage, [{ cubic_m: 24.0, rate: 0.5678, amount: 56.78 }])
+      bill_b.instance_variable_set(:@water_usage, [{ :cubic_m => 24.0, :rate => 0.5678, :amount => 56.78 }])
       bills << bill_a
       bills << bill_b
     end

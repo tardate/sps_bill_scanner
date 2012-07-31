@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'pdf-reader-turtletext', '~> 0.1.0'
+gem 'pdf-reader-turtletext', '~> 0.2.1'
 gem 'getoptions', '~> 0.3'
 
 group :development do

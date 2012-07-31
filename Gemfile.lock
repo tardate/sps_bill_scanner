@@ -23,7 +23,7 @@ GEM
     pdf-reader (1.1.1)
       Ascii85 (~> 1.0.0)
       ruby-rc4
-    pdf-reader-turtletext (0.1.0)
+    pdf-reader-turtletext (0.2.1)
       pdf-reader (= 1.1.1)
     rake (0.9.2.2)
     rb-fchange (0.0.5)
@@ -52,7 +52,7 @@ DEPENDENCIES
   getoptions (~> 0.3)
   guard-rspec
   jeweler (~> 1.6.4)
-  pdf-reader-turtletext (~> 0.1.0)
+  pdf-reader-turtletext (~> 0.2.1)
   rake (~> 0.9.2.2)
   rdoc (~> 3.11)
   rspec (~> 2.8.0)

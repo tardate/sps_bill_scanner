@@ -1,0 +1,9 @@
+Version 0.1.1             Release: 1st August 2012
+==================================================
+* update to use pdf-reader-turtletext 0.2.2
+* convert bill parsing to use the more idiomatic bounding_box
+  syntax available in pdf-reader-turtletext
+
+Version 0.1.0              Release: 20th July 2012
+==================================================
+* Initial packaging and release

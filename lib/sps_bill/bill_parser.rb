@@ -3,9 +3,12 @@ require 'date'
 # all the bill scanning and parsing intelligence
 module SpsBill::BillParser
 
-  ELECTRICITY_SERVICE_HEAD = "Electricity Services"
-  GAS_SERVICE_HEAD = "Gas Services by City Gas Pte Ltd"
-  WATER_SERVICE_HEAD = "Water Services by Public Utilities Board"
+  ELECTRICITY_SERVICE_HEADER = /Electricity Services/i
+  ELECTRICITY_SERVICE_FOOTER = /Gas Services|Water Services/i
+  GAS_SERVICE_HEADER = /Gas Services/i
+  GAS_SERVICE_FOOTER = /Water Services/i
+  WATER_SERVICE_HEADER = /Water Services/i
+  WATER_SERVICE_FOOTER = /Waterborne Fee/i
 
   # Returns a collection of parser errors
   def errors
@@ -26,66 +29,109 @@ module SpsBill::BillParser
 
   # Command: extracts the account number
   def parse_account_number
-    @account_number = reader.text_in_region(383.0,999.0,785.0,790.0,1).flatten.join('')
+    region = reader.bounding_box do
+      exclusive!
+      below 'Dated'
+      above 'Type'
+      right_of 'Account No'
+    end
+    # text will be returned like this:
+    #   [[":", "8123123123"]]
+    @account_number = region.text.flatten.last
   end
 
   # Command: extracts the total amount due for the current month
   def parse_total_amount
-    @total_amount = if ref = reader.text_position(/^Total Current Charges due on/)
-      total_parts = reader.text_in_region(ref[:x] + 1,400.0,ref[:y] - 1,ref[:y] + 1,1)
-      total_parts.flatten.first.to_f
+    region = reader.bounding_box do
+      inclusive!
+      below /^Total Current Charges due on/
+      above /^Total Current Charges due on/
+      right_of /^Total Current Charges due on/
+      left_of 400.0
     end
+    # text will be returned like this:
+    #   [["Total Current Charges due on 14 Jun 2011 (Tue)", "251.44"]]
+    @total_amount = region.text.flatten.last.to_f
   end
 
   # Command: extracts the invoice date
   def parse_invoice_date
-    @invoice_date = if ref = reader.text_position("Dated")
-      date_parts = reader.text_in_region(ref[:x] + 1,999.0,ref[:y] - 1,ref[:y] + 1,1)
-      Date.parse(date_parts.first.join('-'))
+    region = reader.bounding_box do
+      inclusive!
+      below 'Dated'
+      above 'Dated'
+      right_of 'Dated'
     end
+    # text will be returned like this:
+    #   [["Dated", "31", "May", "2011"]]
+    date_string = region.text.flatten.slice(1..3).join('-')
+    @invoice_date = Date.parse(date_string)
   end
 
   # Command: extracts the invoice month (as Date, set to 1st of the month)
   def parse_invoice_month
-    @invoice_month = if ref = reader.text_position("Dated")
-      date_parts = reader.text_in_region(ref[:x] + 1,999.0,ref[:y] - 1,ref[:y] + 1,1)
-      m_parts = reader.text_in_region(ref[:x]-200,ref[:x]-1,ref[:y] - 1,ref[:y] + 1,1)
-      Date.parse("#{date_parts.first.last}-#{m_parts.first.first}-01")
+    region = reader.bounding_box do
+      inclusive!
+      below 'Dated'
+      above 'Dated'
     end
+    # text will be returned like this:
+    #   [["May", "11", "Bill", "Dated", "31", "May", "2011"]]
+    date_array = ['01'] + region.text.flatten.slice(0..1)
+    if (yy = date_array[2]).length == 2
+      date_array[2] = "20#{yy}" # WARNING: converting 2-digit date. Assumed to be 21st C
+    end
+    @invoice_month = Date.parse(date_array.join('-'))
   end
 
   # Command: extracts an array of electricity usage charges. Each element is a Hash:
   #   { kwh: float, rate: float, amount: float }
   def parse_electricity_usage
-    @electricity_usage = if upper_ref = reader.text_position(ELECTRICITY_SERVICE_HEAD)
-      lower_ref = reader.text_position(GAS_SERVICE_HEAD)
-      lower_ref ||= reader.text_position(WATER_SERVICE_HEAD)
-      if lower_ref
-        raw_data = reader.text_in_region(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
-        raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
-      end
+    region = reader.bounding_box do
+      exclusive!
+      below ELECTRICITY_SERVICE_HEADER
+      above ELECTRICITY_SERVICE_FOOTER
+      right_of 240.0
+      left_of 450.0
+    end
+    # text will be returned like this:
+    #   [["4 kWh", "0.2410", "0.97"], ["616 kWh", "0.2558", "157.57"]]
+    @electricity_usage = unless (raw_data = region.text).empty?
+      raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
     end
   end
 
   # Command: extracts an array of gas usage charges. Each element is a Hash:
   #   { kwh: float, rate: float, amount: float }
   def parse_gas_usage
-    @gas_usage = if upper_ref = reader.text_position(GAS_SERVICE_HEAD)
-      if lower_ref = reader.text_position(WATER_SERVICE_HEAD)
-        raw_data = reader.text_in_region(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
-        raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
-      end
+    region = reader.bounding_box do
+      exclusive!
+      below GAS_SERVICE_HEADER
+      above GAS_SERVICE_FOOTER
+      right_of 240.0
+      left_of 450.0
+    end
+    # text will be returned like this:
+    #   [["4 kWh", "0.2410", "0.97"], ["616 kWh", "0.2558", "157.57"]]
+    @gas_usage = unless (raw_data = region.text).empty?
+      raw_data.map{|l| {:kwh => l[0].gsub(/kwh/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
     end
   end
 
   # Command: extracts an array of water usage charges. Each element is a Hash:
   #   { cubic_m: float, rate: float, amount: float }
   def parse_water_usage
-    @water_usage = if upper_ref = reader.text_position(WATER_SERVICE_HEAD)
-      if lower_ref = reader.text_position("Waterborne Fee")
-        raw_data = reader.text_in_region(240.0,450.0,lower_ref[:y]+1,upper_ref[:y],1)
-        raw_data.map{|l| {:cubic_m => l[0].gsub(/cu m/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
-      end
+    region = reader.bounding_box do
+      exclusive!
+      below WATER_SERVICE_HEADER
+      above WATER_SERVICE_FOOTER
+      right_of 240.0
+      left_of 450.0
+    end
+    # text will be returned like this:
+    #   [["36.1 Cu M", "1.1700", "42.24"], ["-3.0 Cu M", "1.4000", "-4.20"]]
+    @water_usage = unless (raw_data = region.text).empty?
+      raw_data.map{|l| {:cubic_m => l[0].gsub(/cu m/i,'').to_f, :rate => l[1].to_f, :amount => l[2].to_f} }
     end
   end
 

@@ -9,7 +9,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rake', '~> 0.9.2.2'
+  gem 'rake', '~> 12.3.3'
   gem 'rspec', '~> 2.8.0', :require => 'spec'
   gem 'rdoc', '~> 3.11'
   # guard for auto-running tests

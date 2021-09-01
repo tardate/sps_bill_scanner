@@ -71,7 +71,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_development_dependency(%q<rake>, ["~> 0.9.2.2"])
       s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
-      s.add_development_dependency(%q<rdoc>, ["~> 3.11"])
+      s.add_development_dependency(%q<rdoc>, "~> 6.3")
       s.add_development_dependency(%q<guard-rspec>, [">= 0"])
     else
       s.add_dependency(%q<pdf-reader-turtletext>, ["~> 0.2.2"])
@@ -80,7 +80,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
       s.add_dependency(%q<rspec>, ["~> 2.8.0"])
-      s.add_dependency(%q<rdoc>, ["~> 3.11"])
+      s.add_dependency(%q<rdoc>, "~> 6.3")
       s.add_dependency(%q<guard-rspec>, [">= 0"])
     end
   else
@@ -90,7 +90,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
     s.add_dependency(%q<rake>, ["~> 0.9.2.2"])
     s.add_dependency(%q<rspec>, ["~> 2.8.0"])
-    s.add_dependency(%q<rdoc>, ["~> 3.11"])
+    s.add_dependency(%q<rdoc>, "~> 6.3")
     s.add_dependency(%q<guard-rspec>, [">= 0"])
   end
 end

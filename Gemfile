@@ -11,7 +11,7 @@ end
 group :development, :test do
   gem 'rake', '~> 0.9.2.2'
   gem 'rspec', '~> 2.8.0', :require => 'spec'
-  gem 'rdoc', '~> 3.11'
+  gem 'rdoc', '~> 6.3'
   # guard for auto-running tests
   gem 'guard-rspec'
 end
